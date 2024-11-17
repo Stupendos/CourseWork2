@@ -16,30 +16,27 @@ class JavaQuestionServiceTest {
     }
 
     @Test
-    void addQuestion() {
-        Question question = new Question("What is Java", "Language of programming");
-        javaQuestionService.addQuestion("What is Java", "Language of programming");
-        assertEquals("What is Java", question.getQuestion());
-        assertEquals("Language of programming", question.getAnswer());
+    void add() {
+        assertEquals(0, javaQuestionService.getAllQuestions().size());
+        javaQuestionService.add("What is Java", "Language of programming");
+        assertEquals(1, javaQuestionService.getAllQuestions().size());
     }
 
     @Test
     void removeQuestion() {
         Question question = new Question("What is Java", "Language of programming");
-        javaQuestionService.addQuestion("What is Java", "Language of programming");
-        assertEquals("What is Java", question.getQuestion());
-        javaQuestionService.removeQuestion("What is Java");
-        assertFalse(javaQuestionService.getAllQuestions().contains(question));
+        javaQuestionService.add(question);
+        assertEquals(1, javaQuestionService.getAllQuestions().size());
+        javaQuestionService.removeQuestion(question);
+        assertEquals(0, javaQuestionService.getAllQuestions().size());
     }
 
     @Test
     void getAllQuestions() {
         Question question = new Question("What is Java", "Language of programming");
         Question question1 = new Question("What is your version", "of course 17");
-        javaQuestionService.addQuestion("What is Java", "Language of programming");
-        javaQuestionService.addQuestion("What is your version", "of course 17");
-        assertEquals("What is Java", question.getQuestion());
-        assertEquals("What is your version", question1.getQuestion());
+        javaQuestionService.add(question);
+        javaQuestionService.add(question1);
         int questionCount = javaQuestionService.getAllQuestions().size();
         assertEquals(2, questionCount);
         assertTrue(javaQuestionService.getAllQuestions().stream().anyMatch(q -> q.getQuestion().equals("What is Java")));
@@ -48,8 +45,8 @@ class JavaQuestionServiceTest {
 
     @Test
     void getRandomQuestion() {
-        javaQuestionService.addQuestion("What is Java", "Language of programming");
-        javaQuestionService.addQuestion("What is your version", "of course 17");
+        javaQuestionService.add("What is Java", "Language of programming");
+        javaQuestionService.add("What is your version", "of course 17");
         Question randomQuestion = javaQuestionService.getRandomQuestion();
         assertNotNull(randomQuestion);
         assertTrue(

@@ -2,35 +2,30 @@ package com.example.work.course2.MyCourseWork2.controllers;
 
 import com.example.work.course2.MyCourseWork2.question.Question;
 import com.example.work.course2.MyCourseWork2.services.QuestionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/exam/java")
 public class JavaQuestionController {
     private final QuestionService questionService;
 
-    @Autowired
-    public JavaQuestionController(QuestionService questionService) {
-        this.questionService = questionService;
-    }
-
     @GetMapping("/add")
-    public String addQuestion(@RequestParam String question, @RequestParam String answer) {
-        questionService.addQuestion(question, answer);
+    public String add(@RequestParam String question, @RequestParam String answer) {
+        questionService.add(question, answer);
         return "Вопрос добавлен";
     }
 
     @PostMapping("/remove")
-    public String removeQuestion(@RequestParam String question, @RequestParam String answer) {
-        questionService.removeQuestion(question);
-        return "Question removed successfully";
+    public Question removeQuestion(@RequestParam String question, @RequestParam String answer) {
+        return questionService.removeQuestion( new Question(question, answer));
     }
 
     @GetMapping
-    public List<Question> getAllQuestions() {
+    public Collection<Question> getAllQuestions() {
         return questionService.getAllQuestions();
     }
 }

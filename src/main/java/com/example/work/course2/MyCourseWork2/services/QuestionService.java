@@ -3,15 +3,17 @@ package com.example.work.course2.MyCourseWork2.services;
 import com.example.work.course2.MyCourseWork2.question.Question;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
 
 @Service
 public interface QuestionService {
-    void addQuestion(String question, String answer);
+    Question add(String question, String answer);
 
-    void removeQuestion(String question);
+    Question add(Question question);
 
-    List<Question> getAllQuestions();
+    Question removeQuestion(Question question);
+
+    Collection<Question> getAllQuestions();
 
     Question getRandomQuestion();
 }
